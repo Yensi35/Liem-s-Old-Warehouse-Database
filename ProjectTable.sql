@@ -1,3 +1,9 @@
+/* Rules for staff table :
+1.Every staff hired must have a personal information like name, gender, date of birth, address, email, phone number, and salary.
+2.Every staff has an identification number :'STXXX' -> XXX : number between 0-9
+3.Staff gender must be either ‘Male’ or ‘Female’.
+4.Staff email must contains ‘@’.
+5.Staff phone must be numeric. */
 
 CREATE TABLE Staff(
 	StaffID CHAR (5) PRIMARY KEY NOT NULL
@@ -13,12 +19,22 @@ CREATE TABLE Staff(
 	StaffSalary Varchar (20)NOT NULL
 )
 
+/*Rules for Category Table :
+1. Every category has their own category name
+2. Identification number : 'CTXXX' -> XXX : number between 0-9*/
+
 CREATE TABLE Category(
 	CategoryID CHAR (5) PRIMARY KEY NOT NULL
 	CHECK (CategoryID LIKE 'CT[0-9][0-9][0-9]'),
 	CategoryName VARCHAR (20) NOT null
 	CHECK(CategoryName IN ( 'Food','Household Needs','Beverage')),
 )
+
+/*Rules for Item Table :
+1. Every item supplied from factories or distributed to distributors have its own name, supply price, distribute price, stock, material and description
+2. Every item has an identification number : 'ITXXX' -> XXX : number between 0-9
+3. Every item has their own category
+4. Check the item stock so that the stock cannot be empty */
 
 CREATE TABLE Item(
 	ItemID CHAR (5) PRIMARY KEY NOT NULL
@@ -36,6 +52,14 @@ CREATE TABLE Item(
 	ItemDescription VARCHAR (100) DEFAULT 'No Description' NOT NULL
 )
 
+/*Rules for Factory Table : 
+1.Every factory that wants to supply their items must be registered in the warehouse. The registration requires the factory’s name, 
+  address, supervisor, rating, and start date 
+2. Every factory has an identification number : 'FCXXX' -> XXX : number between 0-9
+3. The name of the factory must be between 10 and 50 characters.
+4. Factory address must ends with ‘ Street’.
+5. Factory rating must be between 0-5 and the number can be decimal. */
+
 CREATE TABLE Factory(
 	FactoryID CHAR (5) PRIMARY KEY NOT NULL
 	CHECK(FactoryID LIKE'FC[0-9][0-9][0-9]'),
@@ -48,6 +72,10 @@ CREATE TABLE Factory(
 	CONSTRAINT chk_Ratings CHECK (FactoryRating >= 0 AND FactoryRating <= 5),
 	StartDate VARCHAR (15)
 )
+
+/*Rules for SupplyTransaction Table :
+1. Every supply transaction made with the supplier have all the information about staff, factory, transaction date, items purchased, and the quantity of each item.
+2. Every supply transaction has an identification number : 'SUXXX' -> XXX : number between 0-9 */
 
 CREATE TABLE SupplyTransaction(
 	SupplyID CHAR (5) PRIMARY KEY NOT NULL
@@ -79,6 +107,14 @@ CREATE TABLE SupplyTransactionDetail(
 	ON DELETE CASCADE
 )
 
+/*Rules for Distributor Table :
+1. Every distributor that distribute items from the warehouse must already completed their company and personal information like name,
+   address, company name, location, email, and phone number.
+2. Every distributor has an identification number : 'DIXXX' -> XXX : number between 0-9
+3. Distributor’s email must contain ‘@’.
+4. Distributor’s company name must ends with ‘ Company’.
+5. Distributor’s phone number must be numeric. */
+
 CREATE TABLE Distributor(
 DistributorID CHAR (5) PRIMARY KEY NOT NULL
 CHECK (DistributorID LIKE 'DI[0-9][0-9][0-9]'),
@@ -92,6 +128,10 @@ CHECK(DistributorEmail LIKE'%@'),
 DistributorPhoneNumber Numeric (14) NOT NULL
 )
 
+/* Rules for DistributeTransaction Table :
+1. Every distribute transaction made by the distributor have all the information about staff, distributor, distribution city, 
+   transaction date, items distributed, and the quantity of each item.
+2. Every distribute transaction has an identification number : 'DTXXX' -> XXX: number between 0-9 */
 
 CREATE TABLE DistributeTransaction(
 	DistributeID CHAR (5) PRIMARY KEY NOT NULL
