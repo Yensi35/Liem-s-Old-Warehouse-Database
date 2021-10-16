@@ -16,8 +16,21 @@ CREATE TABLE Staff(
 	StaffEmail VARCHAR (30) NOT NULL
 	CHECK(StaffEmail LIKE '%@%'),
 	StaffPhoneNumber Numeric (14) NOT NULL,
-	StaffSalary Varchar (20)NOT NULL
+	StaffSalary BIGINT NOT NULL
 )
+
+INSERT INTO Staff
+VALUES ('ST001','Yensi','FEMALE','1999-01-21','Perum.Duri Kosambi Baru,Blok D No.12,Jakarta','yensiliem@gmail.com','087809373308',4000000),
+	('ST002','Michael','MALE','1998-05-12','Sunter Jaya,No.11,Jakarta','michaell@gmail.com','08120495873401',3500000),
+	('ST003','Jonathan','MALE','1998-02-20','Boulevard Barat,No.22a,Jakarta','Jonathan22@gmail.com','087809658345',4000000),
+	('ST004','Jovina Lawrence','FEMALE','1997-02-05','Danau Sunter Barat,No.10,Jakarta','Lawrencia11@gmail.com','081236590766',3500000),
+	('ST005','Nicholle','MALE','1995-09-23','Muara Bahari,No.24,Jakarta','nichollee@gmail.com','082199837422',4000000),
+	('ST006','Kevin','MALE','1998-10-21','Green Apartment,Jakarta','kevin@gmail.com','081298736496',3500000),
+	('ST007','Dinda','FEMALE','1997-11-28','Kebayoran Baru, Jakarta','dinda@gmail.com','087800635418',4000000),
+	('ST008','Lydia Putri','FEMALE','1998-01-10','Kemanggisan,Jakarta','lydia@gmail.com','081200938471',3000000),
+	('ST009','Nicholas','MALE','1998-02-23','Ancol Selatan 2,Jakarta','nicholas@gmail.com','082199073648',3500000),
+	('ST010','Sri Ratna','FEMALE','1998-10-29','Kelapa Gading,Jakarta','sriratna@gmail.com','0821945634532',4000000)
+	
 
 /*Rules for Category Table :
 1. Every category has their own category name
@@ -30,6 +43,11 @@ CREATE TABLE Category(
 	CHECK(CategoryName IN ( 'Food','Household Needs','Beverage')),
 )
 
+INSERT INTO Category
+VALUES	('CT001', 'Beverage'),
+	('CT002', 'Household Needs'),
+	('CT003', 'Food')
+	
 /*Rules for Item Table :
 1. Every item supplied from factories or distributed to distributors have its own name, supply price, distribute price, stock, material and description
 2. Every item has an identification number : 'ITXXX' -> XXX : number between 0-9
@@ -44,13 +62,41 @@ CREATE TABLE Item(
 	ON UPDATE CASCADE
 	ON DELETE CASCADE,
 	ItemName VARCHAR (100) NOT NULL,
-	ItemQty	VARCHAR (50) NOT NULL,
-	SupplyPrice VARCHAR (20) NOT NULL,
-	DistributePrice VARCHAR (20) NOT NULL,
-	Stock VARCHAR (100) NOT NULL,
-	Material VARCHAR (100) NOT NULL,
-	ItemDescription VARCHAR (100) DEFAULT 'No Description' NOT NULL
+	ItemQty	INT NOT NULL,
+	SupplyPrice BIGINT NOT NULL,
+	DistributePrice BIGINT NOT NULL,
+	Stock INT NOT NULL,
+	Material VARCHAR (50) NOT NULL,
+	ItemDescription VARCHAR (20) DEFAULT 'No Description' NOT NULL
 )
+
+INSERT INTO Item
+VALUES  ('IT001','CT001','Ultra Milk Vanila 150 ML',200,1500000,2000000,50, 'Liquid',''),
+	('IT002','CT001','Sirup ABC Jeruk 200 ML',500,14500000,15500000,70,'Liquid',''),
+	('IT003','CT001','Sirup ABC Leci 200 ML',500,14500000,15500000,50,'Liquid',''),
+	('IT004','CT001','Sirup ABC Anggur 200 ML',500,14500000,15500000,10,'Liquid',''),
+	('IT005','CT001','Sirup ABC Mangga 200 ML',500,14500000,15500000,50,'Liquid',''),
+	('IT006','CT001','Sirup ABC Markisa 200 ML',500,14500000,15500000,30,'Liquid',''),
+	('IT007','CT001','Nescafe Mocca 150 ML', 1000,13500000,14000000,350,'Liquid',''),
+	('IT008','CT001','Nescafe Original 150 ML',1000,13000000,13500000,200,'Liquid',''),
+	('IT009','CT001','Nescafe Latte',1000,13500000,14000000,350,'Liquid',''),
+	('IT010','CT001','Ultra Milk Chocolate 150 ML',200,1500000,2000000,50,'Liquid',''),
+	('IT011','CT002','Kapur Bagus 20 GR',2000,10000000,10500000,750,'Solid',''),
+	('IT012','CT002','Sunlight 100 ML',700,7000000,8000000,150,'Liquid',''),
+	('IT013','CT002','Sunlight Lemon 100 ML',700,7000000,8000000,50,'Liquid',''),
+	('IT014','CT002','Kamper Bagus 20 GR',500,2500000,3000000,50,'Solid',''),
+	('IT015','CT002','Wipol 100 ML',1500,2250000,3250000,750,'Liquid',''),
+	('IT016','CT002','Vanish 100 ML', 1000,10000000,10500000,350,'Liquid',''),
+	('IT017','CT002','Rinso 100 ML',2000,13000000,13500000,200,'Liqud',''),
+	('IT018','CT002','Rinso 150 ML',1000,10000000,10500000,100,'Liquid',''),
+	('IT019','CT002','Kamper Bagus 10 GR',1000,10000000,1500000,450,'Solid',''),
+	('IT020','CT002','Wipol 150 ML',200,2000000,2500000,30,'Liquid',''),
+	('IT021','CT003','Malkis Original 100 GR',1500,2250000,3250000,750,'Solid',''),
+	('IT022','CT003','Malkis Abon 100 GR', 1000,10500000,11000000,350,'Solid',''),
+	('IT023','CT003','Indomie Soto',2000,3000000,3500000,100,'Solid',''),
+	('IT024','CT003','Indomie Kari',2000,3000000,3500000,50,'Solid',''),
+	('IT025','CT003','Indomie Goreng',2000,3000000,3500000,200,'Solid',''),
+	('IT026','CT003','Indomie Spesial',2000,3000000,3500000,100,'Solid',''),
 
 /*Rules for Factory Table : 
 1.Every factory that wants to supply their items must be registered in the warehouse. The registration requires the factory’s name, 
@@ -68,10 +114,22 @@ CREATE TABLE Factory(
 	FactoryAddress VARCHAR (50) NOT NULL
 	Check(FactoryAddress LIKE'%Street'),
 	FactorySupervisor VARCHAR (30) NOT NULL,
-	FactoryRating DECIMAL (2,1)
+	FactoryRating DECIMAL (1,1)
 	CONSTRAINT chk_Ratings CHECK (FactoryRating >= 0 AND FactoryRating <= 5),
-	StartDate VARCHAR (15)
+	StartDate DATE (15)
 )
+
+INSERT INTO Factory
+VALUES	('FC001','PT.Suka Jaya','Bogor,Kenanga Street','Daniel','4.0','2001-03-04'),
+	('FC002','PT.Indo Makmur','Jakarta,Melati Street','Ivana Annisa','4.2','1999-10-05'),
+	('FC003','PT.Ekadharma','Tangerang,Balikpapan Street','Daffa','4.0','2021-12-08'),
+	('FC004','PT.Suntraco','Tangerang,Juanda Street','Silvia','4.5','1998-11-02'),
+	('FC005','PT.Citra Mandiri','Jakarta, Angkasa Street','Nathaniel','4.0','2000-12-01'),
+	('FC006','PT.ShengHongko','Grogol Street','Mike','3.0','2002-01-02'),
+	('FC007','PT.Makmur Jaya','Sunter Street','Budi','4.0','1999-01-10'),
+	('FC008','PT.Sentosa Jaya','Imam Bonjol Street','Ivan','4.5','1985-03-24'),
+	('FC009','PT.Orang Tua Group ','Semanggi Street','Chika','3.0','2003-04-10'),
+	('FC010','PT.Jaya Maju Terus','Margonda Street','Marcel','5.0','2001-01-01');
 
 /*Rules for SupplyTransaction Table :
 1. Every supply transaction made with the supplier have all the information about staff, factory, transaction date, items purchased, and the quantity of each item.
