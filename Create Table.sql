@@ -124,8 +124,8 @@ INSERT INTO Factory
 		('FC003','PT.Nestle Indonesia','Tangerang,Balikpapan Street','Daffa','4.0','2021-12-08'),
 		('FC004','PT.Bagus Indonesia','Tangerang,Juanda Street','Silvia','4.5','1998-11-02'),
 		('FC005','PT.Unilever Indonesia','Jakarta, Angkasa Street','Nathaniel','4.0','2000-12-01'),
-		('FC006','PPT.Mayora Indah','Grogol Street','Mike','3.0','2002-01-02'),
-		('FC007','PT.Indofood CBP','Sunter Street','Budi','4.0','1999-01-10')
+		('FC006','PPT.Mayora Indah','Jakarta, Grogol Baru Street','Mike','3.0','2002-01-02'),
+		('FC007','PT.Indofood CBP','Tangerang, Kartini Karya Street','Budi','4.0','1999-01-10')
 	
 /*Rules for SupplyTransaction Table :
 1. Every supply transaction made with the supplier have all the information about staff, factory, transaction date, items purchased, and the quantity of each item.
@@ -166,27 +166,54 @@ INSERT INTO SupplyTransaction
 		('SU013','ST005','FC005','IT013','2019-01-12',700),
 		('SU014','ST004','FC004','IT014','2019-01-13',500),
 		('SU015','ST005','FC005','IT015','2019-01-13',1500),
-		('SU015','ST005','FC005','IT016','2019-01-13',1000),
-		('SU015','ST005','FC005','IT017','2019-01-13',2000),
-		('SU015','ST005','FC005','IT018','2019-01-13',1000),
-		('SU016','ST004','FC004','IT019','2019-01-14',1000),
-		('SU017','ST005','FC005','IT020','2019-01-14',200),
-		('SU018','ST006','FC006','IT021','2019-01-15'1500),
-		('SU019','ST006','FC006','IT022','2019-01-15'1000),
-		('SU020','ST007','FC007','IT023','2019-01-15'2000)
-		('SU020','ST007','FC007','IT024','2019-01-15'2000)
-		('SU020','ST007','FC007','IT025','2019-01-15'2000)
+		('SU016','ST005','FC005','IT016','2019-01-13',1000),
+		('SU017','ST005','FC005','IT017','2019-01-13',2000),
+		('SU018','ST005','FC005','IT018','2019-01-13',1000),
+		('SU019','ST004','FC004','IT019','2019-01-14',1000),
+		('SU020','ST005','FC005','IT020','2019-01-14',200),
+		('SU021','ST006','FC006','IT021','2019-01-15'1500),
+		('SU022','ST006','FC006','IT022','2019-01-15'1000),
+		('SU023','ST007','FC007','IT023','2019-01-15'2000),
+		('SU024','ST007','FC007','IT024','2019-01-15'2000),
+		('SU025','ST007','FC007','IT025','2019-01-15'2000)
 		
 CREATE TABLE SupplyTransactionDetail(
 	SupplyID CHAR (5)  NOT NULL
 	REFERENCES SupplyTransaction(SupplyID)
 	ON UPDATE CASCADE
 	ON DELETE CASCADE,
-	FactoryID CHAR (5) NOT NULL
-	REFERENCES Factory(FactoryID)
+	ItemID CHAR (5) NOT NULL
+	REFERENCES Item(ItemID)
 	ON UPDATE CASCADE
 	ON DELETE CASCADE
 )
+
+INSERT INTO SupplyTransacationDetails
+	VALUES  ('SU001','IT001'),
+		('SU002','IT002'),
+		('SU003','IT003'),
+		('SU004','IT004'),
+		('SU005','IT005'),
+		('SU006','IT006'),
+		('SU007','IT007'),
+		('SU008','IT008'),
+		('SU009','IT009'),
+		('SU010','IT010'),
+		('SU011','IT011'),
+		('SU012','IT012'),
+		('SU013','IT013'),
+		('SU014','IT014'),
+		('SU015','IT015'),
+		('SU016','IT016'),
+		('SU017','IT017'),
+		('SU018','IT018'),
+		('SU019','IT019'),
+		('SU020','IT020'),
+		('SU021','IT021'),
+		('SU022','IT022'),
+		('SU023','IT023'),
+		('SU024','IT024'),
+		('SU025','IT025')
 
 /*Rules for Distributor Table :
 1. Every distributor that distribute items from the warehouse must already completed their company and personal information like name,
@@ -209,6 +236,11 @@ CHECK(DistributorEmail LIKE'%@'),
 DistributorPhoneNumber Numeric (14) NOT NULL
 )
 
+INSERT INTO Distributor
+	VALUES  ('DI001','Jordan Tandy','Kemang, Jakarta','Indomaret Company','Blok D Tower Jaya No.1C, Jakarta','Jordan.DIM@gmail.com','082190876153'),
+		('DI002','Melisa','Palmerah, Jakarta','Giant Company','Gedung Plaza Pasifik No.3A, Jakarta','Melisa_GSP@gmail.com','087800182731'),
+		('DI003','Yensi','Sunter Karya, Jakarta','Alfamart Company','Danau Sunter Barat 3 No.4D, Jakarta','Yensi.AlfS@gmail.com','082111769845')
+
 /* Rules for DistributeTransaction Table :
 1. Every distribute transaction made by the distributor have all the information about staff, distributor, distribution city, 
    transaction date, items distributed, and the quantity of each item.
@@ -216,7 +248,7 @@ DistributorPhoneNumber Numeric (14) NOT NULL
 
 CREATE TABLE DistributeTransaction(
 	DistributeID CHAR (5) PRIMARY KEY NOT NULL
-	CHECK(DistributeID LIKE'DI[0-9][0-9][0-9]'),
+	CHECK(DistributeID LIKE'DT[0-9][0-9][0-9]'),
 	StaffID CHAR (5) NOT NULL
 	REFERENCES Staff(StaffID)
 	ON UPDATE CASCADE
@@ -233,13 +265,67 @@ CREATE TABLE DistributeTransaction(
 	TransactionDate DATE NOT NULL,
 )
 
+INSERT INTO DistributeTransaction
+	VALUES  ('DT001','ST008','DI001','IT001','Jakarta','2019-02-03'),
+		('DT002','ST008','DI001','IT002','Jakarta','2019-02-03'),
+		('DT003','ST008','DI001','IT003','Jakarta','2019-02-03'),
+		('DT004','ST008','DI001','IT004','Jakarta','2019-02-04'),
+		('DT005','ST008','DI001','IT005','Jakarta','2019-02-04'),
+		('DT006','ST008','DI001','IT011','Jakarta','2019-02-04'),
+		('DT007','ST008','DI001','IT012','Jakarta','2019-02-04'),
+		('DT008','ST009','DI002','IT013','Jakarta','2019-02-05'),
+		('DT009','ST009','DI002','IT014','Jakarta','2019-02-05'),
+		('DT010','ST009','DI002','IT006','Jakarta','2019-02-05'),
+		('DT011','ST010','DI003','IT007','Jakarta','2019-02-05'),
+		('DT012','ST010','DI003','IT008','Jakarta','2019-02-05'),
+		('DT013','ST010','DI003','IT008','Jakarta','2019-02-05'),
+		('DT014','ST008','DI001','IT010','Jakarta','2019-02-06'),
+		('DT015','ST008','DI001','IT016','Jakarta','2019-02-06'),
+		('DT016','ST008','DI001','IT017','Jakarta','2019-02-06'),
+		('DT017','ST008','DI001','IT019','Jakarta','2019-02-06'),
+		('DT018','ST008','DI001','IT018','Jakarta','2019-02-06'),
+		('DT019','ST009','DI002','IT020','Jakarta','2019-02-06'),
+		('DT020','ST009','DI002','IT022','Jakarta','2019-02-06'),
+		('DT021','ST009','DI002','IT021','Jakarta','2019-02-06'),
+		('DT022','ST010','DI003','IT023','Jakarta','2019-02-06'),
+		('DT023','ST010','DI003','IT025','Jakarta','2019-02-06'),
+		('DT024','ST010','DI003','IT025','Jakarta','2019-02-06'),
+		('DT025','ST010','DI003','IT009','Jakarta','2019-02-06')
+		
 CREATE TABLE DistributeTransactionDetails(
-	DistributorID CHAR (5)  NOT NULL
-	REFERENCES DistributeTransaction(DistributeID)
-	ON UPDATE CASCADE
-	ON DELETE CASCADE,
 	DistributeID CHAR (5) NOT NULL
 	REFERENCES DistributeTransaction(DistributeID)
 	ON UPDATE CASCADE
 	ON DELETE CASCADE
-	)
+	ItemID CHAR (5) NOT NULL
+	REFERENCES Item(ItemID)
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
+)
+
+INSERT INTO DistributeTransactionDetails
+	VALUES  ('DT001','IT001'),
+		('DT002','IT002'),
+		('DT003','IT003'),
+		('DT004','IT004'),
+		('DT005','IT005'),
+		('DT006','IT011'),
+		('DT007','IT012'),
+		('DT008','IT013'),
+		('DT009','IT014'),
+		('DT010','IT006'),
+		('DT011','IT007'),
+		('DT012','IT008'),
+		('DT013','IT008'),
+		('DT014','IT010'),
+		('DT015','IT016'),
+		('DT016','IT017'),
+		('DT017','IT019'),
+		('DT018','IT018'),
+		('DT019','IT020'),
+		('DT020','IT022'),
+		('DT021','IT021'),
+		('DT022','IT023'),
+		('DT023','IT025'),
+		('DT024','IT025'),
+		('DT025','IT009')
