@@ -188,6 +188,9 @@ CREATE TABLE SupplyTransactionDetail(
 	ON DELETE CASCADE
 )
 
+ALTER TABLE SupplyTransactionDetail
+ADD CONSTRAINT PK_SupplyTransaction_Item PRIMARY KEY CLUSTERED(SupplyID,ItemID)
+
 INSERT INTO SupplyTransacationDetails
 	VALUES  ('SU001','IT001'),
 		('SU002','IT002'),
@@ -302,6 +305,9 @@ CREATE TABLE DistributeTransactionDetails(
 	ON UPDATE CASCADE
 	ON DELETE CASCADE
 )
+
+ALTER TABLE SupplyTransactionDetail
+ADD CONSTRAINT PK_DistributeTransaction_Item PRIMARY KEY CLUSTERED(DistributeID,ItemID)
 
 INSERT INTO DistributeTransactionDetails
 	VALUES  ('DT001','IT001'),
