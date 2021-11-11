@@ -2,8 +2,7 @@
 1.Every staff hired must have a personal information like name, gender, date of birth, address, email, phone number, and salary.
 2.Every staff has an identification number :'STXXX' -> XXX : number between 0-9
 3.Staff gender must be either ‘Male’ or ‘Female’.
-4.Staff email must contains ‘@’.
-5.Staff phone must be numeric. */
+4.Staff email must contains ‘@’. */
 
 CREATE TABLE Staff(
 	StaffID CHAR (5) PRIMARY KEY NOT NULL
@@ -15,10 +14,9 @@ CREATE TABLE Staff(
 	StaffAddress VARCHAR (100) NOT NULL,
 	StaffEmail VARCHAR (30) NOT NULL
 	CHECK(StaffEmail LIKE '%@%'),
-	StaffPhoneNumber Numeric (14) NOT NULL,
+	StaffPhoneNumber VARCHAR(15) NOT NULL,
 	StaffSalary BIGINT NOT NULL
 )
-
 INSERT INTO Staff
 	VALUES  ('ST001','Yensi','FEMALE','1999-01-21','Perum.Duri Kosambi Baru,Blok D No.12,Jakarta','yensiliem@gmail.com','087809373308',4000000),
 		('ST002','Michael','MALE','1998-05-12','Sunter Jaya,No.11,Jakarta','michaell@gmail.com','08120495873401',3500000),
@@ -30,8 +28,7 @@ INSERT INTO Staff
 		('ST008','Lydia Putri','FEMALE','1998-01-10','Kemanggisan,Jakarta','lydia@gmail.com','081200938471',3000000),
 		('ST009','Nicholas','MALE','1998-02-23','Ancol Selatan 2,Jakarta','nicholas@gmail.com','082199073648',3500000),
 		('ST010','Sri Ratna','FEMALE','1998-10-29','Kelapa Gading,Jakarta','sriratna@gmail.com','0821945634532',4000000)
-
-
+		
 /*Rules for Category Table :
 1. Every category has their own category name
 2. Identification number : 'CTXXX' -> XXX : number between 0-9*/
@@ -39,8 +36,7 @@ INSERT INTO Staff
 CREATE TABLE Category(
 	CategoryID CHAR (5) PRIMARY KEY NOT NULL
 	CHECK (CategoryID LIKE 'CT[0-9][0-9][0-9]'),
-	CategoryName VARCHAR (20) NOT null
-	CHECK(CategoryName IN ( 'Food','Household Needs','Beverage')),
+	CategoryName VARCHAR (20) NOT null,
 )
 
 INSERT INTO Category
@@ -58,44 +54,44 @@ CREATE TABLE Item(
 	ItemID CHAR (5) PRIMARY KEY NOT NULL
 	CHECK(ItemID LIKE'IT[0-9][0-9][0-9]'),
 	CategoryID CHAR (5) NOT NULL
-	REFERENCES Category(CategoryID)
-	ON UPDATE CASCADE
-	ON DELETE CASCADE,
+	REFERENCES Category(CategoryID),
 	ItemName VARCHAR (100) NOT NULL,
-	ItemQty	INT NOT NULL,
 	SupplyPrice BIGINT NOT NULL,
 	DistributePrice BIGINT NOT NULL,
 	Stock INT NOT NULL,
 	Material VARCHAR (50) NOT NULL,
-	ItemDescription VARCHAR (20) DEFAULT 'No Description' NOT NULL
+	ItemDescription VARCHAR (20) NOT NULL DEFAULT 'No Description'
 )
 
-INSERT INTO Item
-	VALUES  ('IT001','CT001','Ultra Milk Vanila 150 ML',200,1500000,2000000,50, 'Liquid',''),
-		('IT002','CT001','Sirup ABC Jeruk 200 ML',500,14500000,15500000,70,'Liquid',''),
-		('IT003','CT001','Sirup ABC Leci 200 ML',500,14500000,15500000,50,'Liquid',''),
-		('IT004','CT001','Sirup ABC Anggur 200 ML',500,14500000,15500000,10,'Liquid',''),
-		('IT005','CT001','Sirup ABC Mangga 200 ML',500,14500000,15500000,50,'Liquid',''),
-		('IT006','CT001','Sirup ABC Markisa 200 ML',500,14500000,15500000,30,'Liquid',''),
-		('IT007','CT001','Nescafe Mocca 150 ML', 1000,13500000,14000000,350,'Liquid',''),
-		('IT008','CT001','Nescafe Original 150 ML',1000,13000000,13500000,200,'Liquid',''),
-		('IT009','CT001','Nescafe Latte',1000,13500000,14000000,350,'Liquid',''),
-		('IT010','CT001','Ultra Milk Chocolate 150 ML',200,1500000,2000000,50,'Liquid',''),
-		('IT011','CT002','Kapur Bagus 20 GR',2000,10000000,10500000,750,'Solid',''),
-		('IT012','CT002','Sunlight 100 ML',700,7000000,8000000,150,'Liquid',''),
-		('IT013','CT002','Sunlight Lemon 100 ML',700,7000000,8000000,50,'Liquid',''),
-		('IT014','CT002','Kamper Bagus 20 GR',500,2500000,3000000,50,'Solid',''),
-		('IT015','CT002','Wipol 100 ML',1500,2250000,3250000,750,'Liquid',''),
-		('IT016','CT002','Vanish 100 ML', 1000,10000000,10500000,350,'Liquid',''),
-		('IT017','CT002','Rinso 100 ML',2000,13000000,13500000,200,'Liqud',''),
-		('IT018','CT002','Rinso 150 ML',1000,10000000,10500000,100,'Liquid',''),
-		('IT019','CT002','Kamper Bagus 10 GR',1000,10000000,1500000,450,'Solid',''),
-		('IT020','CT002','Wipol 150 ML',200,2000000,2500000,30,'Liquid',''),
-		('IT021','CT003','Malkist Original 100 GR',1500,2250000,3250000,750,'Solid',''),
-		('IT022','CT003','Malkist Abon 100 GR', 1000,10500000,11000000,350,'Solid',''),
-		('IT023','CT003','Indomie Soto',2000,3000000,3500000,100,'Solid',''),
-		('IT024','CT003','Indomie Kari',2000,3000000,3500000,50,'Solid',''),
-		('IT025','CT003','Indomie Goreng',2000,3000000,3500000,200,'Solid','')
+DROP Table Item
+
+INSERT INTO Item (ItemID, CategoryID, ItemName, SupplyPrice, DistributePrice, Stock, Material)
+	VALUES  
+		('IT001','CT001','Ultra Milk Vanila 150 ML',1500000,2000000,50, 'Liquid'),
+		('IT002','CT001','Sirup ABC Jeruk 200 ML',14500000,15500000,70,'Liquid'),
+		('IT003','CT001','Sirup ABC Leci 200 ML',14500000,15500000,50,'Liquid'),
+		('IT004','CT001','Sirup ABC Anggur 200 ML',14500000,15500000,10,'Liquid'),
+		('IT005','CT001','Sirup ABC Mangga 200 ML',14500000,15500000,50,'Liquid'),
+		('IT006','CT001','Sirup ABC Markisa 200 ML',14500000,15500000,30,'Liquid'),
+		('IT007','CT001','Nescafe Mocca 150 ML',13500000,14000000,350,'Liquid'),
+		('IT008','CT001','Nescafe Original 150 ML',13000000,13500000,200,'Liquid'),
+		('IT009','CT001','Nescafe Latte',13500000,14000000,350,'Liquid'),
+		('IT010','CT001','Ultra Milk Chocolate 150 ML',1500000,2000000,50,'Liquid'),
+		('IT011','CT002','Kapur Bagus 20 GR',10000000,10500000,750,'Solid'),
+		('IT012','CT002','Sunlight 100 ML',7000000,8000000,150,'Liquid'),
+		('IT013','CT002','Sunlight Lemon 100 ML',7000000,8000000,50,'Liquid'),
+		('IT014','CT002','Kamper Bagus 20 GR',2500000,3000000,50,'Solid'),
+		('IT015','CT002','Wipol 100 ML',2250000,3250000,750,'Liquid'),
+		('IT016','CT002','Vanish 100 ML',10000000,10500000,350,'Liquid'),
+		('IT017','CT002','Rinso 100 ML',13000000,13500000,200,'Liqud'),
+		('IT018','CT002','Rinso 150 ML',10000000,10500000,100,'Liquid'),
+		('IT019','CT002','Kamper Bagus 10 GR',10000000,1500000,450,'Solid'),
+		('IT020','CT002','Wipol 150 ML',2000000,2500000,10,'Liquid'),
+		('IT021','CT003','Malkist Original 100 GR',2250000,3250000,750,'Solid'),
+		('IT022','CT003','Malkist Abon 100 GR',10500000,11000000,350,'Solid'),
+		('IT023','CT003','Indomie Soto',3000000,3500000,100,'Solid'),
+		('IT024','CT003','Indomie Kari',3000000,3500000,50,'Solid'),
+		('IT025','CT003','Indomie Goreng',3000000,3500000,200,'Solid')
 
 /*Rules for Factory Table : 
 1.Every factory that wants to supply their items must be registered in the warehouse. The registration requires the factory’s name, 
@@ -113,118 +109,115 @@ CREATE TABLE Factory(
 	FactoryAddress VARCHAR (50) NOT NULL
 	Check(FactoryAddress LIKE'%Street'),
 	FactorySupervisor VARCHAR (30) NOT NULL,
-	FactoryRating DECIMAL (1,1)
-	CONSTRAINT chk_Ratings CHECK (FactoryRating >= 0 AND FactoryRating <= 5),
-	StartDate DATE 
+	FactoryRating DECIMAL (2,1) NOT NULL
+	CONSTRAINT chk CHECK (FactoryRating >= 0 AND FactoryRating <= 5),
+	StartDate DATE NOT NULL
 )
 
+SELECT * FROM Factory
+
 INSERT INTO Factory
-	VALUES	('FC001','PT.Ultrajaya Milk','Bogor,Kenanga Street','Daniel','4.0','2001-03-04'),
-		('FC002','PT.ABC','Jakarta,Melati Street','Ivana Annisa','4.2','1999-10-05'),
-		('FC003','PT.Nestle Indonesia','Tangerang,Balikpapan Street','Daffa','4.0','2021-12-08'),
-		('FC004','PT.Bagus Indonesia','Tangerang,Juanda Street','Silvia','4.5','1998-11-02'),
-		('FC005','PT.Unilever Indonesia','Jakarta, Angkasa Street','Nathaniel','4.0','2000-12-01'),
-		('FC006','PPT.Mayora Indah','Jakarta, Grogol Baru Street','Mike','3.0','2002-01-02'),
-		('FC007','PT.Indofood CBP','Tangerang, Kartini Karya Street','Budi','4.0','1999-01-10')
+	VALUES	
+		('FC001','PT.Ultrajaya Milk','Bogor,Kenanga Street','Daniel',4.0,'2001-03-04'),
+		('FC002','PT.ABC Tangerang','Jakarta,Melati Street','Ivana Annisa',4.2,'1999-10-05'),
+		('FC003','PT.Nestle Indonesia','Tangerang,Balikpapan Street','Daffa',4.0,'2021-12-08'),
+		('FC004','PT.Bagus Indonesia','Tangerang,Juanda Street','Silvia',4.5,'1998-11-02'),
+		('FC005','PT.Unilever Indonesia','Jakarta, Angkasa Street','Nathaniel',4.0,'2000-12-01'),
+		('FC006','PT.Mayora Indah','Jakarta, Grogol Baru Street','Mike',3.0,'2002-01-02'),
+		('FC007','PT.Indofood CBP','Tangerang, Kartini Karya Street','Budi',4.0,'1999-01-10'),
+		('FC008','PT.ABC Bandung','Bandung, Anggrek Street','Jovan',4.3,'2001-10-01'),
+		('FC009','PT.Mayora Indah Bekasi','Bekasi, Indah Street','Mike',3.7,'2002-01-02'),
+		('FC010','PT.Indofood CBP Tangerang','Tangerang, Baru Street','Budi',4.1,'1999-01-10')
 	
 /*Rules for SupplyTransaction Table :
 1. Every supply transaction made with the supplier have all the information about staff, factory, transaction date, items purchased, and the quantity of each item.
 2. Every supply transaction has an identification number : 'SUXXX' -> XXX : number between 0-9 */
 
-CREATE TABLE SupplyTransaction(
+CREATE TABLE SupplyTransactionHeader(
 	SupplyID CHAR (5) PRIMARY KEY NOT NULL
 	CHECK(SupplyID LIKE'SU[0-9][0-9][0-9]'),
 	StaffID CHAR (5) NOT NULL
-	REFERENCES Staff(StaffID)
-	ON UPDATE CASCADE
-	ON DELETE CASCADE,
+	REFERENCES Staff(StaffID),
 	FactoryID CHAR (5) NOT NULL
-	REFERENCES Factory(FactoryID)
-	ON UPDATE CASCADE
-	ON DELETE CASCADE,
-	ItemID CHAR (5) NOT NULL
-	REFERENCES Item(ItemID)
-	ON UPDATE CASCADE
-	ON DELETE CASCADE,
+	REFERENCES Factory(FactoryID),
 	SupplyTransactionDate DATE NOT NULL,
-	SuppliedItemQty INT NOT NULL
 )
 
-INSERT INTO SupplyTransaction
-	VALUES  ('SU001','ST001','FC001','IT001','2019-01-10',150),
-		('SU002','ST002','FC002','IT002','2019-01-10',500),
-		('SU003','ST002','F002','IT003','2019-01-10',500),
-		('SU004','ST002','F002','IT004','2019-01-10',500),
-		('SU005','ST002','F002','IT005','2019-01-10',500),
-		('SU006','ST002','F002','IT006','2019-01-10',500),
-		('SU007','ST003','FC003','IT007','2019-01-11',1000),
-		('SU008','ST003','FC003','IT008','2019-01-11',1000),
-		('SU009','ST003','FC003','IT009','2019-01-11',1000),
-		('SU010','ST001','FC001','IT010','2019-01-11',200),
-		('SU011','ST004','FC004','IT011','2019-01-12',2000),
-		('SU012','ST005','FC005','IT012','2019-01-12',700),
-		('SU013','ST005','FC005','IT013','2019-01-12',700),
-		('SU014','ST004','FC004','IT014','2019-01-13',500),
-		('SU015','ST005','FC005','IT015','2019-01-13',1500),
-		('SU016','ST005','FC005','IT016','2019-01-13',1000),
-		('SU017','ST005','FC005','IT017','2019-01-13',2000),
-		('SU018','ST005','FC005','IT018','2019-01-13',1000),
-		('SU019','ST004','FC004','IT019','2019-01-14',1000),
-		('SU020','ST005','FC005','IT020','2019-01-14',200),
-		('SU021','ST006','FC006','IT021','2019-01-15'1500),
-		('SU022','ST006','FC006','IT022','2019-01-15'1000),
-		('SU023','ST007','FC007','IT023','2019-01-15'2000),
-		('SU024','ST007','FC007','IT024','2019-01-15'2000),
-		('SU025','ST007','FC007','IT025','2019-01-15'2000)
-		
+INSERT INTO SupplyTransactionHeader
+	VALUES  
+		('SU001','ST001','FC001','2019-01-10'),
+		('SU002','ST002','FC002','2019-01-10'),
+		('SU003','ST002','FC008','2019-01-10'),
+		('SU004','ST002','FC002','2019-01-10'),
+		('SU005','ST002','FC008','2019-01-10'),
+		('SU006','ST002','FC002','2019-01-10'),
+		('SU007','ST003','FC003','2019-01-11'),
+		('SU008','ST003','FC003','2019-01-11'),
+		('SU009','ST003','FC003','2019-01-11'),
+		('SU010','ST001','FC001','2019-01-11'),
+		('SU011','ST004','FC004','2019-01-12'),
+		('SU012','ST005','FC005','2019-01-12'),
+		('SU013','ST005','FC005','2019-01-12'),
+		('SU014','ST004','FC004','2019-01-13'),
+		('SU015','ST005','FC005','2019-01-13'),
+		('SU016','ST005','FC005','2019-01-13'),
+		('SU017','ST005','FC005','2019-01-13'),
+		('SU018','ST005','FC005','2019-01-13'),
+		('SU019','ST004','FC004','2019-01-14'),
+		('SU020','ST005','FC005','2019-01-14'),
+		('SU021','ST006','FC009','2019-01-15'),
+		('SU022','ST006','FC006','2019-01-15'),
+		('SU023','ST007','FC007','2019-01-15'),
+		('SU024','ST007','FC010','2019-01-15'),
+		('SU025','ST007','FC010','2019-01-15')
+
+SELECT * FROM SupplyTransactionHeader
+
 CREATE TABLE SupplyTransactionDetail(
-	SupplyID CHAR (5)  NOT NULL
-	REFERENCES SupplyTransaction(SupplyID)
-	ON UPDATE CASCADE
-	ON DELETE CASCADE,
-	ItemID CHAR (5) NOT NULL
-	REFERENCES Item(ItemID)
-	ON UPDATE CASCADE
-	ON DELETE CASCADE
+	SupplyID CHAR (5)  NOT NULL FOREIGN KEY
+	REFERENCES SupplyTransactionHeader(SupplyID),
+	ItemID CHAR (5) NOT NULL FOREIGN KEY
+	REFERENCES Factory(FactoryID),
+	PurchasedQty INT NOT NULL
+	PRIMARY KEY (SupplyID , ItemID)
 )
 
-ALTER TABLE SupplyTransactionDetail
-ADD CONSTRAINT PK_SupplyTransaction_Item PRIMARY KEY CLUSTERED(SupplyID,ItemID)
+SELECT * FROM SupplyTransactionDetail
 
-INSERT INTO SupplyTransacationDetails
-	VALUES  ('SU001','IT001'),
-		('SU002','IT002'),
-		('SU003','IT003'),
-		('SU004','IT004'),
-		('SU005','IT005'),
-		('SU006','IT006'),
-		('SU007','IT007'),
-		('SU008','IT008'),
-		('SU009','IT009'),
-		('SU010','IT010'),
-		('SU011','IT011'),
-		('SU012','IT012'),
-		('SU013','IT013'),
-		('SU014','IT014'),
-		('SU015','IT015'),
-		('SU016','IT016'),
-		('SU017','IT017'),
-		('SU018','IT018'),
-		('SU019','IT019'),
-		('SU020','IT020'),
-		('SU021','IT021'),
-		('SU022','IT022'),
-		('SU023','IT023'),
-		('SU024','IT024'),
-		('SU025','IT025')
+INSERT INTO SupplyTransactionDetail(SupplyID, ItemID, PurchasedQty)
+	VALUES  
+		('SU001','IT001',150),
+		('SU002','IT002',500),
+		('SU003','IT003',500),
+		('SU004','IT004',500),
+		('SU005','IT005',500),
+		('SU006','IT006',500),
+		('SU007','IT007',1000),
+		('SU008','IT008',1000),
+		('SU009','IT009',1000),
+		('SU010','IT010',200),
+		('SU011','IT011',2000),
+		('SU012','IT012',700),
+		('SU013','IT013',700),
+		('SU014','IT014',500),
+		('SU015','IT015',1500),
+		('SU016','IT016',1000),
+		('SU017','IT017',2000),
+		('SU018','IT018',1000),
+		('SU019','IT019',1000),
+		('SU020','IT020',200),
+		('SU021','IT021',1500),
+		('SU022','IT022',1000),
+		('SU023','IT023',2000),
+		('SU024','IT024',2000),
+		('SU025','IT025',2000)
 
 /*Rules for Distributor Table :
 1. Every distributor that distribute items from the warehouse must already completed their company and personal information like name,
    address, company name, location, email, and phone number.
 2. Every distributor has an identification number : 'DIXXX' -> XXX : number between 0-9
 3. Distributor’s email must contain ‘@’.
-4. Distributor’s company name must ends with ‘ Company’.
-5. Distributor’s phone number must be numeric. */
+4. Distributor’s company name must ends with ‘ Company’. */
 
 CREATE TABLE Distributor(
 DistributorID CHAR (5) PRIMARY KEY NOT NULL
@@ -235,15 +228,22 @@ CompanyName VARCHAR (50) NOT NULL
 CHECK(CompanyName LIKE '%Company'),
 DistributorLocation VARCHAR (100) NOT NULL,
 DistributorEmail VARCHAR (30) NOT NULL
-CHECK(DistributorEmail LIKE'%@'),
-DistributorPhoneNumber Numeric (14) NOT NULL
+CHECK(DistributorEmail LIKE'%@%'),
+DistributorPhoneNumber VARCHAR (14) NOT NULL
 )
 
 INSERT INTO Distributor
-	VALUES  ('DI001','Jordan Tandy','Kemang, Jakarta','Indomaret Company','Blok D Tower Jaya No.1C, Jakarta','Jordan.DIM@gmail.com','082190876153'),
+	VALUES  
+		('DI001','Jordan Tandy','Kemang, Jakarta','Indomaret Company','Blok D Tower Jaya No.1C, Jakarta','Jordan.DIM@gmail.com','082190876153'),
 		('DI002','Melisa','Palmerah, Jakarta','Giant Company','Gedung Plaza Pasifik No.3A, Jakarta','Melisa_GSP@gmail.com','087800182731'),
-		('DI003','Yensi','Sunter Karya, Jakarta','Alfamart Company','Danau Sunter Barat 3 No.4D, Jakarta','Yensi.AlfS@gmail.com','082111769845')
-
+		('DI003','Yensi','Sunter Karya, Jakarta','Alfamart Company','Sunter Karya Barat 3 No.4D, Jakarta','Yensi.AlfS@gmail.com','082111769845'),
+		('DI004','Dina','Kemanggisan, Jakarta','Giant Company','Ruko Taman Sari Blok D4, Jakarta','Dina_GSP@gmail.com','08211827310912'),
+		('DI005','Vina Angelita','Sunter Agung, Jakarta','Alfamart Company','Sunter Agung Barat No.11A, Jakarta','VinaAng.AlfS@gmail.com','087809981721'),
+		('DI006','Michael','PIK, Jakarta','Giant Company','Tower AG No.3A, Jakarta','Michael_GSP@gmail.com','087898716281'),
+		('DI007','Tony Sanjaya','Kemang, Jakarta','Alfamart Company','Tower Kemang Lt.1C, Jakarta','ToniSan.AlfS@gmail.com','082198192817'),
+		('DI008','Elisabeth','Cakung, Jakarta','Alfamart Company','Jln.Pengangsaan 3 No.11B, Jakarta','Elisabeth.AlfS@gmail.com','082109837134'),
+		('DI009','Vera','Palmerah, Jakarta','Giant Company','Jln.Jaya 1, Jakarta','Vera_GSP@gmail.com','087800182731'),
+		('DI010','Dimas','Pluit, Jakarta','Alfamart Company','Jln.Pluit Sakti 3, Jakarta','Dimas.AlfS@gmail.com','082111769845')
 /* Rules for DistributeTransaction Table :
 1. Every distribute transaction made by the distributor have all the information about staff, distributor, distribution city, 
    transaction date, items distributed, and the quantity of each item.
@@ -305,9 +305,6 @@ CREATE TABLE DistributeTransactionDetails(
 	ON UPDATE CASCADE
 	ON DELETE CASCADE
 )
-
-ALTER TABLE SupplyTransactionDetail
-ADD CONSTRAINT PK_DistributeTransaction_Item PRIMARY KEY CLUSTERED(DistributeID,ItemID)
 
 INSERT INTO DistributeTransactionDetails
 	VALUES  ('DT001','IT001'),
