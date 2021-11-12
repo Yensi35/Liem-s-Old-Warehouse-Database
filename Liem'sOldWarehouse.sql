@@ -177,7 +177,7 @@ CREATE TABLE SupplyTransactionDetail(
 	SupplyID CHAR (5)  NOT NULL FOREIGN KEY
 	REFERENCES SupplyTransactionHeader(SupplyID),
 	ItemID CHAR (5) NOT NULL FOREIGN KEY
-	REFERENCES Factory(FactoryID),
+	REFERENCES Item(ItemID),
 	PurchasedQty INT NOT NULL
 	PRIMARY KEY (SupplyID , ItemID)
 )
